@@ -10,7 +10,8 @@ exports.login = async (req, res, next) => {
             {
                 userId: user._id,
             },
-            jwtSecret
+            jwtSecret,
+            { expiresIn: 60 * 60 }
         );
         delete user.password;
         // 3.发送响应
