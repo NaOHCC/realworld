@@ -1,11 +1,23 @@
 const { User } = require("../model");
-
+const jwt = require("../util/jwt");
+const { jwtSecret } = require("../config/config.default");
 exports.login = async (req, res, next) => {
     try {
         // 1.数据验证
         // 2.生成token
+        const user = req.user.toJSON();
+        const token = await jwt.sign(
+            {
+                userId: user._id,
+            },
+            jwtSecret
+        );
+        delete user.password;
         // 3.发送响应
-        res.send("post /users/login");
+        res.status(200).json({
+            ...user,
+            token,
+        });
     } catch (err) {
         next(err);
     }
@@ -34,7 +46,9 @@ exports.registe = async (req, res, next) => {
 };
 exports.getCurrentUser = async (req, res, next) => {
     try {
-        res.send("get /user");
+        res.status(200).json({
+            user: req.user,
+        });
     } catch (err) {
         next(err);
     }
