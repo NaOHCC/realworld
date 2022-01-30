@@ -5,7 +5,8 @@ const router = require("./route");
 const errorhandler = require("errorhandler");
 const path = require("path");
 const session = require("express-session");
-const { sessionSecret } = require("./config/config.default");
+const { sessionSecret, dbUri } = require("./config/config.default");
+const MongoStore = require("connect-mongo");
 require("./model");
 
 const app = express();
@@ -21,9 +22,12 @@ app.use(
         resave: false,
         saveUninitialized: true,
         cookie: {
-            maxAge: 1000 * 60, // 过期时间
+            maxAge: 1000 * 60 * 60 * 24, // 过期时间
             secure: false, // 只有https协议, 才收发cookie
         }, // 保存session id 的cookie设置
+        store: MongoStore.create({
+            mongoUrl: dbUri,
+        }), // 持久化到MongoDB中
     })
 );
 

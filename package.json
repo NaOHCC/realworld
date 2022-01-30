@@ -12,6 +12,7 @@
   "dependencies": {
     "art-template": "^4.13.2",
     "axios": "^0.25.0",
+    "connect-mongo": "^4.6.0",
     "cors": "^2.8.5",
     "errorhandler": "^1.5.1",
     "express": "^4.17.2",
