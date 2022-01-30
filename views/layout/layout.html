@@ -17,8 +17,7 @@
         <!-- Import the custom Bootstrap 4 theme from our hosted CDN -->
         <link rel="stylesheet" href="//demo.productionready.io/main.css" />
         <!-- 公告css -->
-        {{block 'head'}}
-        {{/block}}
+        {{block 'head'}} {{/block}}
     </head>
 
     <body>
@@ -34,13 +33,13 @@
 
         <!-- 公共js脚本 -->
         <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script>
             // 全局混入, 影响所有Vue实例
             Vue.mixin({
-                delimiters: ['{%', '%}']
-            })
+                delimiters: ["{%", "%}"],
+            });
         </script>
-        {{block 'script'}}
-        {{/block}}
+        {{block 'script'}} {{/block}}
     </body>
 </html>

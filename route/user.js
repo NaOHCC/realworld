@@ -8,7 +8,7 @@ router.get("/login", UserCtrl.showLogin);
 
 router.get("/register", UserCtrl.showRegister);
 
-router.post("/register", UserCtrl.register);
+router.post("/register", userValidator.registe, UserCtrl.register);
 
 router.get("/settings", UserCtrl.showSettings);
 

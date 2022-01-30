@@ -15,9 +15,11 @@
                     {{/each}}
                 </ul>
                 {{/if}} -->
-                <h2>hello{% foo%}</h2>
+
                 <ul class="error-messages">
-                    <li>Error</li>
+                    <li v-for="(error,index) in errors" :key="index">
+                        {% error.msg %}
+                    </li>
                 </ul>
 
                 <!-- <form action="/register" method="post"> -->
@@ -25,6 +27,7 @@
                     {{ if !isLogin}}
                     <fieldset class="form-group">
                         <input
+                            v-model="user.username"
                             class="form-control form-control-lg"
                             type="text"
                             placeholder="Your Name"
@@ -34,6 +37,7 @@
                     {{/if}}
                     <fieldset class="form-group">
                         <input
+                            v-model="user.email"
                             class="form-control form-control-lg"
                             type="text"
                             placeholder="Email"
@@ -42,6 +46,7 @@
                     </fieldset>
                     <fieldset class="form-group">
                         <input
+                            v-model="user.password"
                             class="form-control form-control-lg"
                             type="password"
                             placeholder="Password"
@@ -56,23 +61,40 @@
         </div>
     </div>
 </div>
-{{/block}}
-
-{{block 'script'}}
+{{/block}} {{block 'script'}}
 <script>
-    ;(()=>{
-        const app=new Vue({
-            el:'#login',
-            
-            data:{
-                foo:'bar'
+    (() => {
+        const app = new Vue({
+            el: "#login",
+
+            data: {
+                user: {
+                    username: "",
+                    email: "",
+                    password: "",
+                },
+                errors: [],
             },
-            methods:{
-                handleSubmit(){
-                    console.log('submit');
-                }
-            }
-        })
+            methods: {
+                async handleSubmit() {
+                    try {
+                        const { data } = await axios.post("/register", {
+                            user: this.user,
+                        });
+                        console.log(data);
+                        // 清楚错误信息
+                        this.errors = [];
+                        // 跳转到首页
+                        window.location.href = "/";
+                    } catch (err) {
+                        if (err.response.status == 400) {
+                            this.errors = err.response.data.errors;
+                            console.log(this.errors);
+                        }
+                    }
+                },
+            },
+        });
     })();
 </script>
 {{/block}}

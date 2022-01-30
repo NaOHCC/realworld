@@ -18,9 +18,11 @@ exports.showRegister = async (req, res, next) => {
 exports.register = async (req, res, next) => {
     try {
         console.log(req.body);
-        res.render("login", {
-            errors: ["不能为空"],
-        });
+        // 数据验证
+        // 验证通过, 创建新用户
+        // 保持登录状态
+        // 跳转到首页
+        res.send("post");
     } catch (err) {
         next(err);
     }
