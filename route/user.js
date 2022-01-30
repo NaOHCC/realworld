@@ -8,6 +8,8 @@ router.get("/login", UserCtrl.showLogin);
 
 router.get("/register", UserCtrl.showRegister);
 
+router.post("/register", UserCtrl.register);
+
 router.get("/settings", UserCtrl.showSettings);
 
 router.get("/profile/:username", UserCtrl.showProfile);

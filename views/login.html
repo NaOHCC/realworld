@@ -1,41 +1,78 @@
-{{extend './layout/layout.html'}}
-
-{{block 'body'}}
-<div class="auth-page">
+{{extend './layout/layout.html'}} {{block 'body'}}
+<div class="auth-page" id="login">
     <div class="container page">
         <div class="row">
-
             <div class="col-md-6 offset-md-3 col-xs-12">
                 <h1 class="text-xs-center">{{isLogin?'Sign in': 'Sign up'}}</h1>
                 <p class="text-xs-center">
                     <a href="">Have an account?</a>
                 </p>
 
+                <!-- {{if errors}}
                 <ul class="error-messages">
-                    <li>That email is already taken</li>
+                    {{each errors}}
+                    <li>{{$value}}</li>
+                    {{/each}}
+                </ul>
+                {{/if}} -->
+                <h2>hello{% foo%}</h2>
+                <ul class="error-messages">
+                    <li>Error</li>
                 </ul>
 
-                <form>
+                <!-- <form action="/register" method="post"> -->
+                <form @submit.prevent="handleSubmit">
                     {{ if !isLogin}}
                     <fieldset class="form-group">
-                        <input class="form-control form-control-lg" type="text" placeholder="Your Name">
+                        <input
+                            class="form-control form-control-lg"
+                            type="text"
+                            placeholder="Your Name"
+                            name="username"
+                        />
                     </fieldset>
                     {{/if}}
                     <fieldset class="form-group">
-                        <input class="form-control form-control-lg" type="text" placeholder="Email">
+                        <input
+                            class="form-control form-control-lg"
+                            type="text"
+                            placeholder="Email"
+                            name="email"
+                        />
                     </fieldset>
                     <fieldset class="form-group">
-                        <input class="form-control form-control-lg" type="password" placeholder="Password">
+                        <input
+                            class="form-control form-control-lg"
+                            type="password"
+                            placeholder="Password"
+                            name="password"
+                        />
                     </fieldset>
                     <button class="btn btn-lg btn-primary pull-xs-right">
                         {{isLogin?'Sign in':'Sign up'}}
                     </button>
                 </form>
             </div>
-
         </div>
     </div>
 </div>
 {{/block}}
 
-
+{{block 'script'}}
+<script>
+    ;(()=>{
+        const app=new Vue({
+            el:'#login',
+            delimiters:['{%','%}'],
+            data:{
+                foo:'bar'
+            },
+            methods:{
+                handleSubmit(){
+                    console.log('submit');
+                }
+            }
+        })
+    })();
+</script>
+{{/block}}
