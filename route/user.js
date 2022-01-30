@@ -6,8 +6,11 @@ const auth = require("../middleware/auth");
 const noAuth = require("../middleware/no-auth");
 
 router.get("/login", noAuth, UserCtrl.showLogin);
+router.post("/login", noAuth, userValidator.login, UserCtrl.login);
 
 router.get("/register", noAuth, UserCtrl.showRegister);
+
+router.get("/logout", UserCtrl.logout);
 
 router.post("/register", userValidator.registe, UserCtrl.register);
 

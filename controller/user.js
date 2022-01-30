@@ -37,7 +37,7 @@ exports.register = async (req, res, next) => {
 
 exports.showSettings = async (req, res, next) => {
     try {
-        res.render("profile");
+        res.render("settings");
     } catch (err) {
         next(err);
     }
@@ -45,6 +45,31 @@ exports.showSettings = async (req, res, next) => {
 exports.showProfile = async (req, res, next) => {
     try {
         res.render("profile");
+    } catch (err) {
+        next(err);
+    }
+};
+
+// 退出接口
+exports.logout = async (req, res, next) => {
+    try {
+        // 清除用户登录状态
+        req.session.user = null;
+        // 跳转到首页
+        res.redirect("/");
+    } catch (err) {
+        next(err);
+    }
+};
+
+exports.login = async (req, res, next) => {
+    try {
+        const user = req.user;
+        // 保持登录状态
+        req.session.user = user;
+        res.status(200).json({
+            user,
+        });
     } catch (err) {
         next(err);
     }
