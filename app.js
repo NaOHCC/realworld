@@ -31,6 +31,12 @@ app.use(
     })
 );
 
+app.use((req, res, next) => {
+    // 统一给模板添加数据
+    app.locals.sessionUser = req.session.user;
+    next();
+});
+
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(

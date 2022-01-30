@@ -3,14 +3,15 @@ const router = express.Router();
 const UserCtrl = require("../controller/user");
 const userValidator = require("../vaildator/user");
 const auth = require("../middleware/auth");
+const noAuth = require("../middleware/no-auth");
 
-router.get("/login", UserCtrl.showLogin);
+router.get("/login", noAuth, UserCtrl.showLogin);
 
-router.get("/register", UserCtrl.showRegister);
+router.get("/register", noAuth, UserCtrl.showRegister);
 
 router.post("/register", userValidator.registe, UserCtrl.register);
 
-router.get("/settings", UserCtrl.showSettings);
+router.get("/settings", auth, UserCtrl.showSettings);
 
 router.get("/profile/:username", UserCtrl.showProfile);
 
