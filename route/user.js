@@ -3,16 +3,15 @@ const router = express.Router();
 const UserCtrl = require("../controller/user");
 const userValidator = require("../vaildator/user");
 const auth = require("../middleware/auth");
-// 用户登录
-router.post("/users/login", userValidator.login, UserCtrl.login);
 
-// 用户注册
-router.post("/users", userValidator.registe, UserCtrl.registe);
+router.get("/login", UserCtrl.showLogin);
 
-// 获取当前登录用户
-router.get("/user", auth, UserCtrl.getCurrentUser);
+router.get("/register", UserCtrl.showRegister);
 
-// 更新当前用户
-router.put("/user", auth, UserCtrl.updateUser);
+router.get("/settings", UserCtrl.showSettings);
+
+router.get("/profile/:username", UserCtrl.showProfile);
+
+router.get("/profile/:username/favorites", UserCtrl.showProfile);
 
 module.exports = router;
