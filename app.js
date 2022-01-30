@@ -4,9 +4,28 @@ const cors = require("cors");
 const router = require("./route");
 const errorhandler = require("errorhandler");
 const path = require("path");
+const session = require("express-session");
+const { sessionSecret } = require("./config/config.default");
 require("./model");
 
 const app = express();
+
+// 使用session中间件
+// 存储session: 生成session id; 存储数据(默认存在内存)
+// req.session.xxx=xxx
+// 获取session: 更加session id 获取session 容器中的数据
+// res.session.xxx
+app.use(
+    session({
+        secret: sessionSecret, // 签发session id 密钥
+        resave: false,
+        saveUninitialized: true,
+        cookie: {
+            maxAge: 1000 * 60, // 过期时间
+            secure: false, // 只有https协议, 才收发cookie
+        }, // 保存session id 的cookie设置
+    })
+);
 
 app.use(morgan("dev"));
 app.use(express.json());
